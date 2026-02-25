@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book your pet or livestock appointment with Paws & Hooves veterinary clinic in Nairobi, Kenya. Easy online scheduling for all services.">
+    <meta name="keywords" content="book appointment, veterinary appointment, pet booking, livestock consultation, Nairobi Kenya">
+    <meta name="theme-color" content="#55a39a">
+    <link rel="canonical" href="https://pawsandhooves.co.ke/appointment">
+    <title>Paws & Hooves | Book an Appointment</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" aria-label="Main navigation">
+        <a href="index.html" class="logo-container" style="text-decoration: none;">
+            <img src="assets/images/mainlogo.png" alt="Paws and Hooves Logo" class="nav-logo">
+            <span class="nav-text"></span>
+        </a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="clinic.html">Clinic</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#testimonials">Reviews</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="appointment.html" class="btn-primary">Book Now</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section for Appointment -->
+    <section class="appointment-hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Schedule Your Appointment</h1>
+            <p class="hero-subtitle">Quick and easy booking for pet and livestock care</p>
+        </div>
+    </section>
+
+    <!-- Appointment/Booking Section -->
+    <section id="main-content" class="appointment-section">
+        <div class="appointment-container container">
+            <div class="section-header">
+                
+                <p class="section-subtitle">Fill out the form below to schedule your consultation</p>
+            </div>
+            
+            <form id="appointmentForm" class="appointment-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ownerName">Your Name *</label>
+                        <input type="text" id="ownerName" name="ownerName" aria-required="true" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ownerPhone">Phone Number *</label>
+                        <input type="tel" id="ownerPhone" name="ownerPhone" placeholder="+254..." aria-required="true" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ownerEmail">Email Address</label>
+                        <input type="email" id="ownerEmail" name="ownerEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentType">Service Type *</label>
+                        <select id="appointmentType" name="appointmentType" aria-required="true" required>
+                            <option value="">Select a service</option>
+                            <option value="wellness">Wellness Exam</option>
+                            <option value="vaccination">Vaccination</option>
+                            <option value="surgery">Surgery</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="emergency">Emergency</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="petName">Pet/Livestock Name *</label>
+                        <input type="text" id="petName" name="petName" placeholder="e.g., Simba, Bessie" aria-required="true" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="petType">Pet/Livestock Type *</label>
+                        <select id="petType" name="petType" aria-required="true" required>
+                            <option value="">Select type</option>
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="bird">Bird</option>
+                            <option value="rabbit">Rabbit</option>
+                            <option value="cattle">Cattle</option>
+                            <option value="goat">Goat</option>
+                            <option value="sheep">Sheep</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="appointmentDate">Preferred Date *</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate" aria-required="true" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentTime">Preferred Time *</label>
+                        <select id="appointmentTime" name="appointmentTime" aria-required="true" required>
+                            <option value="">Select time</option>
+                            <option value="08:00">08:00 AM</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="02:00">02:00 PM</option>
+                            <option value="03:00">03:00 PM</option>
+                            <option value="04:00">04:00 PM</option>
+                            <option value="05:00">05:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="appointmentNotes">Additional Notes</label>
+                    <textarea id="appointmentNotes" name="appointmentNotes" rows="4" placeholder="Any health concerns or special requirements..."></textarea>
+                </div>
+
+                <div class="form-group full-width checkbox">
+                    <input type="checkbox" id="termsAgree" name="termsAgree" required>
+                    <label for="termsAgree">I agree to the terms and consent to contact via phone/email</label>
+                </div>
+
+                <button type="submit" class="btn-primary btn-large">Confirm Appointment</button>
+                <p class="form-note">We'll confirm your appointment within 2 hours</p>
+            </form>
+
+            <div class="appointment-info">
+                <h3>Quick Contact</h3>
+                <p><strong>Phone:</strong> 0759396531</p>
+                <p><strong>WhatsApp:</strong> 0759396531</p>
+                <p><strong>Email:</strong> careywangaretracy@gmail.com</p>
+                <p><strong>Location:</strong> Nairobi & Kiambu (Mobile Vet)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container container">
+            <div class="section-header">
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-subtitle">We'd love to hear from you</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>📍 Location</h3>
+                    <p>Nairobi & Kiambu</p>
+                    <p>(Mobile Vet)</p>
+                </div>
+                <div class="contact-card">
+                    <h3>📞 Phone</h3>
+                    <p>0759396531</p>
+                    <p>WhatsApp: 0759396531</p>
+                </div>
+                <div class="contact-card">
+                    <h3>📧 Email</h3>
+                    <p>careywangaretracy@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <h3>🔗 Social</h3>
+                    <p>Follow us on social media</p>
+                    <p>for updates & bookings</p>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61587915556007" class="social-btn" target="_blank">Facebook</a>
+                <a href="https://wa.me/254759396531" class="social-btn" target="_blank">WhatsApp</a>
+                <a href="https://www.tiktok.com/@user33pawsandhooves?_r=1&_t=ZS-94D2cKNX3Zc" class="social-btn" target="_blank">TikTok</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-section">
+                <h4>Paws & Hooves</h4>
+                <p>Professional veterinary care for pets and livestock across Kenya.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="clinic.html">Clinic</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="services.html">Pet Wellness</a></li>
+                    <li><a href="services.html">Vaccinations</a></li>
+                    <li><a href="services.html">Livestock Care</a></li>
+                    <li><a href="services.html">Emergency Care</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#">f</a>
+                    <a href="#">📷</a>
+                    <a href="#">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Paws & Hooves by Wangari. All rights reserved.</p>
+            <p>Est. 2011 | Licensed Veterinary Clinic | Emergency Care Available</p>
+        </div>
+    </footer>
+
+    <script src="js/data-handler.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>
