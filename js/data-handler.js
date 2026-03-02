@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="service-meta">
                     <span class="duration">⏱️ ${service.duration}</span>
                 </div>
-                <p class="price"><strong>${service.price}</strong></p>
                 <a href="#appointment" class="btn-outline" onclick="setServiceType('${service.title}')">Book This</a>
             </div>
         `).join('');
