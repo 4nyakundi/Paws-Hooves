@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQ9Y7Y12EX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XQ9Y7Y12EX');
+    </script>
 </head>
 <body>
     <!-- Skip to main content link for accessibility -->
@@ -51,7 +61,7 @@
                 <p class="section-subtitle">Fill out the form below to schedule your consultation</p>
             </div>
             
-            <form id="appointmentForm" class="appointment-form">
+            <form id="appointmentForm" class="appointment-form" novalidate>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="ownerName">Your Name *</label>
@@ -226,8 +236,10 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/data-handler.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/booking.js"></script>
+    <script type="module" src="js/booking.js"></script>
 </body>
 </html>

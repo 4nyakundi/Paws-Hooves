@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paws & Hooves - Appointment Confirmation</title>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .content {
+            padding: 20px 0;
+            color: #333333;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .content h1 {
+            color: #55a39a;
+            font-family: 'Playfair Display', serif;
+        }
+        .booking-details, .clinic-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .booking-details h2, .clinic-info h2 {
+            font-size: 18px;
+            color: #55a39a;
+            margin-top: 0;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+            font-size: 12px;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://pawsandhooves.co.ke/assets/images/mainlogo.png" alt="Paws & Hooves Logo">
+        </div>
+        <div class="content">
+            <h1>Your appointment is booked!</h1>
+            <p>Dear {{ownerName}},</p>
+            <p>Thank you for choosing Paws & Hooves. Your appointment has been successfully scheduled. We will contact you within the next 2 hours to confirm the final details.</p>
+
+            <div class="booking-details">
+                <h2>📋 Booking Details</h2>
+                <p><strong>Booking ID:</strong> {{booking_id}}</p>
+                <p><strong>Pet/Livestock:</strong> {{petName}} ({{petType}})</p>
+                <p><strong>Service:</strong> {{appointmentType}}</p>
+                <p><strong>Date:</strong> {{appointmentDate}}</p>
+                <p><strong>Time:</strong> {{appointmentTime}}</p>
+                {{#if appointmentNotes}}
+                <p><strong>Notes:</strong> {{appointmentNotes}}</p>
+                {{/if}}
+            </div>
+
+            <div class="clinic-info">
+                <h2>📞 Clinic Contact Information</h2>
+                <p><strong>Phone:</strong> 0759396531</p>
+                <p><strong>WhatsApp:</strong> 0759396531</p>
+                <p><strong>Email:</strong> careywangaretracy@gmail.com</p>
+                <p><strong>Clinic:</strong> Nairobi & Kiambu (Mobile Vet)</p>
+            </div>
+
+            <p>If you need to reschedule or have any questions, please don't hesitate to contact us using the details above.</p>
+            <p>We look forward to seeing you and your animal companion!</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 Paws & Hooves. All rights reserved.</p>
+            <p>Nairobi, Kenya</p>
+        </div>
+    </div>
+</body>
+</html>
