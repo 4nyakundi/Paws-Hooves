@@ -48,7 +48,7 @@ All files in project directory:
 
 ### 1. Prepare Domain & Hosting
 ```bash
-# Register domain: pawsandhooves.co.ke (or alternative)
+# Register domain: pawhooves.co.ke (or alternative)
 # Set up web hosting with:
 # - HTTPS/SSL support (required for production)
 # - PHP/Node.js if using backend form processing
@@ -118,7 +118,7 @@ Ensure all files maintain same relative paths:
 ```nginx
 server {
   listen 443 ssl http2;
-  server_name pawsandhooves.co.ke www.pawsandhooves.co.ke;
+  server_name pawhooves.co.ke www.pawhooves.co.ke;
   
   ssl_certificate /path/to/certificate.crt;
   ssl_certificate_key /path/to/private.key;
@@ -152,7 +152,7 @@ server {
 # Redirect HTTP to HTTPS
 server {
   listen 80;
-  server_name pawsandhooves.co.ke www.pawsandhooves.co.ke;
+  server_name pawhooves.co.ke www.pawhooves.co.ke;
   return 301 https://$server_name$request_uri;
 }
 ```
@@ -408,7 +408,7 @@ backup/
 For deployment assistance:
 - **Hosting Support**: Contact your web hosting provider
 - **Technical Questions**: Review documentation in README.md and ACCESSIBILITY.md
-- **Clinic Support**: info@pawsandhooves.co.ke
+- **Clinic Support**: info@pawhooves.co.ke
 
 ---
 

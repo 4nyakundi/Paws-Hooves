@@ -65,8 +65,8 @@ Update in these files:
 **Contact Details to Update**:
 - Phone: `+254 (0) 701 234 567`
 - Emergency: `+254 (0) 702 998 765`
-- Email: `info@pawsandhooves.co.ke`
-- Emergency Email: `emergency@pawsandhooves.co.ke`
+- Email: `info@pawhooves.co.ke`
+- Emergency Email: `emergency@pawhooves.co.ke`
 - Address: `Garden Estate, Nairobi`
 - Hours: `Mon-Fri: 8:00 AM - 6:00 PM`
 
@@ -139,7 +139,7 @@ Used in:
 ### Change Domain in Meta Tags
 **What to Edit**: All HTML files
 
-Find and replace `https://pawsandhooves.co.ke` with your actual domain in:
+Find and replace `https://pawhooves.co.ke` with your actual domain in:
 - Canonical URLs: `<link rel="canonical" href="..."`
 - Open Graph URLs: `<meta property="og:url" content="..."`
 - Twitter cards: `<meta name="twitter:..."`
@@ -149,7 +149,7 @@ Find and replace `https://pawsandhooves.co.ke` with your actual domain in:
 
 Replace all instances of:
 ```xml
-<loc>https://pawsandhooves.co.ke</loc>
+<loc>https://pawhooves.co.ke</loc>
 ```
 
 With your domain:
@@ -354,7 +354,7 @@ Users can press these keys on any page:
 
 ### Clinic Contact
 - Phone: +254 (0) 701 234 567
-- Email: info@pawsandhooves.co.ke
+- Email: info@pawhooves.co.ke
 - Address: Garden Estate, Nairobi, Kenya
 
 ---

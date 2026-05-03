@@ -242,7 +242,7 @@ All form inputs have:
 ## Contact & Support
 
 For accessibility concerns or feedback:
-- **Email:** info@pawsandhooves.co.ke
+- **Email:** info@pawhooves.co.ke
 - **Phone:** +254 (0) 701 234 567
 - **Address:** Garden Estate, Nairobi, Kenya
 

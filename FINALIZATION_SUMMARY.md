@@ -341,7 +341,7 @@ Plus documentation (optional but recommended):
 For any veterinary services:
 - **Phone**: +254 (0) 701 234 567
 - **Emergency**: +254 (0) 702 998 765
-- **Email**: info@pawsandhooves.co.ke
+- **Email**: info@pawhooves.co.ke
 - **Address**: Garden Estate, Nairobi, Kenya
 - **Hours**: Mon-Fri 8AM-6PM, Sat 9AM-2PM, 24/7 Emergency
 
