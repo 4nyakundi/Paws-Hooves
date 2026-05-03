@@ -248,14 +248,18 @@ function sendAppointmentEmails(appointment) {
     if (appointment.ownerEmail) {
         const clientEmailParams = {
             to_email: appointment.ownerEmail,
-            ownerName: appointment.ownerName,
+            name: appointment.ownerName,
+            to_name: appointment.ownerName,
+            time: new Date().toLocaleTimeString(),
             booking_id: appointment.bookingId,
-            petName: appointment.petName,
-            petType: appointment.petType,
-            appointmentType: appointment.appointmentType,
-            appointmentDate: formatDate(appointment.appointmentDate),
-            appointmentTime: appointment.appointmentTime,
-            appointmentNotes: appointment.appointmentNotes || 'N/A',
+            pet_name: appointment.petName,
+            pet_type: appointment.petType,
+            service: appointment.appointmentType,
+            appointment_date: formatDate(appointment.appointmentDate),
+            appointment_time: appointment.appointmentTime,
+            doctor_phone: DOCTOR_INFO.phone,
+            doctor_email: DOCTOR_INFO.email,
+            clinic_name: DOCTOR_INFO.name
         };
 
         emailjs.send(EMAILJS_SERVICE_ID, CLIENT_TEMPLATE_ID, clientEmailParams)
@@ -270,17 +274,17 @@ function sendAppointmentEmails(appointment) {
     // 2. Email to Doctor/Clinic
     const doctorEmailParams = {
         to_email: DOCTOR_INFO.email, // The clinic's email
-        to_name: DOCTOR_INFO.name,   // The clinic's name
-        ownerName: appointment.ownerName,
-        ownerPhone: appointment.ownerPhone,
-        ownerEmail: appointment.ownerEmail || 'Not provided',
-        petName: appointment.petName,
-        petType: appointment.petType,
-        appointmentType: appointment.appointmentType,
-        appointmentDate: formatDate(appointment.appointmentDate),
-        appointmentTime: appointment.appointmentTime,
-        appointmentNotes: appointment.appointmentNotes || 'None',
+        name: appointment.ownerName,
         booking_id: appointment.bookingId,
+        client_name: appointment.ownerName,
+        client_phone: appointment.ownerPhone,
+        client_email: appointment.ownerEmail || 'Not provided',
+        pet_name: appointment.petName,
+        pet_type: appointment.petType,
+        service: appointment.appointmentType,
+        appointment_date: formatDate(appointment.appointmentDate),
+        appointment_time: appointment.appointmentTime,
+        notes: appointment.appointmentNotes || 'None'
     };
 
     emailjs.send(EMAILJS_SERVICE_ID, DOCTOR_TEMPLATE_ID, doctorEmailParams)
