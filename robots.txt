@@ -5,7 +5,7 @@ Disallow: /private/
 Disallow: /*.json$
 Disallow: /data/
 
-Sitemap: https://pawsandhooves.co.ke/sitemap.xml
+Sitemap: https://pawhooves.co.ke/sitemap.xml
 
 User-agent: Googlebot
 Allow: /
