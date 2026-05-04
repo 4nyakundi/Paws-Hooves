@@ -229,6 +229,18 @@ async function saveAppointment(appointment) {
     // 3. Send emails to both client and doctor
     sendAppointmentEmails(appointment);
     
+    // 4. Send WhatsApp notification via backend server (Uncomment when server is deployed)
+    /*
+    fetch('https://your-deployed-server.onrender.com/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(appointment)
+    })
+    .then(r => r.json())
+    .then(data => console.log('WhatsApp ping sent', data))
+    .catch(err => console.error('WhatsApp error', err));
+    */
+    
     // Log to console for testing
     console.log('Appointment saved:', appointment);
 }
