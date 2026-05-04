@@ -61,7 +61,7 @@
                 <p class="section-subtitle">Fill out the form below to schedule your consultation</p>
             </div>
             
-            <form id="appointmentForm" class="appointment-form" novalidate>
+            <form id="appointmentForm" class="appointment-form" novalidate onsubmit="event.preventDefault();">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="ownerName">Your Name *</label>

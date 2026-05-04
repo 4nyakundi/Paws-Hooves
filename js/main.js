@@ -287,6 +287,18 @@ function validateInput(input) {
 
 setupFormValidation();
 
+// Check if booking system loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const appointmentForm = document.getElementById('appointmentForm');
+    if (appointmentForm) {
+        appointmentForm.addEventListener('submit', () => {
+            if (!window.bookingSystemLoaded) {
+                alert('The booking system is currently unavailable. This happens when viewing the site directly from a file (file://) instead of a web server. Please use a local web server (like VS Code Live Server) or contact the clinic directly at 0759396531.');
+            }
+        });
+    }
+});
+
 // Add error styling
 const errorStyles = document.createElement('style');
 errorStyles.textContent = `

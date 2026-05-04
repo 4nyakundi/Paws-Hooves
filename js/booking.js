@@ -1,5 +1,8 @@
 // ============ APPOINTMENT BOOKING SYSTEM ============
 
+// Signal to main.js that the booking system has successfully loaded
+window.bookingSystemLoaded = true;
+
 // EmailJS Configuration
 const DOCTOR_INFO = {
     email: 'careywangaretracy@gmail.com',
