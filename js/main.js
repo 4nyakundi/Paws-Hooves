@@ -220,6 +220,11 @@ updateActiveNavLink();
 // ============ KEYBOARD SHORTCUTS ============
 
 document.addEventListener('keydown', (e) => {
+    // Ignore keyboard shortcuts if the user is typing in an input, textarea, select, or contenteditable element
+    if (e.target.closest('input, textarea, select, [contenteditable="true"]')) {
+        return;
+    }
+
     // Press 'B' to jump to booking section
     if (e.key === 'b' || e.key === 'B') {
         const bookingSection = document.getElementById('appointment');
@@ -399,21 +404,37 @@ console.log('✓ Main.js initialized successfully');
 // ============ KEYBOARD SHORTCUTS ============
 
 document.addEventListener('keydown', (e) => {
-    // B key - Go to booking
+    // Ignore keyboard shortcuts if the user is typing in an input, textarea, select, or contenteditable element
+    if (e.target.closest('input, textarea, select, [contenteditable="true"]')) {
+        return;
+    }
+
+    // B key - Go to booking (only if we aren't already on a page with the booking section)
     if (e.key === 'b' || e.key === 'B') {
-        window.location.href = 'appointment.html';
+        if (!document.getElementById('appointment')) {
+            window.location.href = 'appointment.html';
+        }
     }
-    // S key - Go to services
+    // S key - Go to services (only if we aren't already on a page with the services section)
     if (e.key === 's' || e.key === 'S') {
-        window.location.href = 'services.html';
+        if (!document.getElementById('services')) {
+            window.location.href = 'services.html';
+        }
     }
-    // C key - Go to clinic
+    // C key - Go to clinic (only if not already on the clinic page)
     if (e.key === 'c' || e.key === 'C') {
-        window.location.href = 'clinic.html';
+        if (!window.location.pathname.includes('clinic.html')) {
+            window.location.href = 'clinic.html';
+        }
     }
-    // H key - Go to home
+    // H key - Go to home (only if not already on the home page)
     if (e.key === 'h' || e.key === 'H') {
-        window.location.href = 'index.html';
+        const isHomePage = window.location.pathname === '/' || 
+                           window.location.pathname.endsWith('index.html') || 
+                           window.location.pathname === '';
+        if (!isHomePage) {
+            window.location.href = 'index.html';
+        }
     }
 });
 
