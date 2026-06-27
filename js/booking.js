@@ -320,7 +320,11 @@ function generateBookingId() {
  * Shows success message with booking details as a professional ticket/modal
  */
 function showSuccessMessage(bookingData) {
-    const whatsappLink = `https://wa.me/${DOCTOR_INFO.phone.replace(/\D/g, '')}?text=Hi%20Paws%20%26%20Hooves%2C%20I%20have%20a%20booking%20confirmation%20with%20ID%20${bookingData.bookingId}`;
+    let docPhone = DOCTOR_INFO.phone.replace(/\D/g, '');
+    if (docPhone.startsWith('0')) {
+        docPhone = '254' + docPhone.substring(1);
+    }
+    const whatsappLink = `https://wa.me/${docPhone}?text=Hi%20Paws%20%26%20Hooves%2C%20I%20have%20a%20booking%20confirmation%20with%20ID%20${bookingData.bookingId}`;
     
     // Create modal overlay
     const overlay = document.createElement('div');
