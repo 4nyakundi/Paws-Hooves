@@ -369,10 +369,75 @@ function getGoogleCalendarUrl(bookingData) {
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startIso}/${endIso}&details=${details}&location=${location}`;
 }
 
+// Global variable to hold booking details for calendar file download
+window.activeBookingData = null;
+
+/**
+ * Downloads a universal iCalendar (.ics) invite file
+ */
+window.downloadICS = function() {
+    const b = window.activeBookingData;
+    if (!b) return;
+    
+    let timeStr = b.appointmentTime; // e.g. "02:00"
+    let hour = parseInt(timeStr.split(':')[0]);
+    let minute = timeStr.split(':')[1] || '00';
+    
+    // Convert 12-hour AM/PM logic
+    if (hour >= 1 && hour <= 7) {
+        hour += 12; // E.g. "02:00" PM is 14:00
+    }
+    
+    const dateParts = b.appointmentDate.split('-'); // [YYYY, MM, DD]
+    const year = dateParts[0];
+    const month = dateParts[1];
+    const day = dateParts[2];
+    
+    const pad = (n) => String(n).padStart(2, '0');
+    const startIso = `${year}${month}${day}T${pad(hour)}${minute}00`;
+    
+    // End date (add 45 mins)
+    let endHour = hour;
+    let endMin = parseInt(minute) + 45;
+    if (endMin >= 60) {
+        endHour += 1;
+        endMin -= 60;
+    }
+    const endIso = `${year}${month}${day}T${pad(endHour)}${pad(endMin)}00`;
+    
+    // Format details for ICS (using double backslash for newlines)
+    const details = `Booking ID: ${b.bookingId}\\nPet: ${b.petName} (${b.petType})\\nService: ${b.appointmentType}\\nClient: ${b.ownerName} (${b.ownerPhone})\\nNotes: ${b.appointmentNotes || 'None'}`;
+    
+    const icsContent = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Paws & Hooves//NONSGML Vet Appointment//EN',
+        'BEGIN:VEVENT',
+        `UID:${b.bookingId}@pawhooves.co.ke`,
+        `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+        `DTSTART:${startIso}`,
+        `DTEND:${endIso}`,
+        `SUMMARY:Paws & Hooves Vet Appointment: ${b.petName}`,
+        `DESCRIPTION:${details}`,
+        'LOCATION:Paws & Hooves Veterinary Clinic\\, Nairobi\\, Kenya',
+        'END:VEVENT',
+        'END:VCALENDAR'
+    ].join('\r\n');
+    
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `PAH-Appointment-${b.bookingId}.ics`;
+    link.click();
+};
+
 /**
  * Shows success message with booking details as a professional ticket/modal
  */
 function showSuccessMessage(bookingData) {
+    // Store globally for calendar downloads
+    window.activeBookingData = bookingData;
+    
     let docPhone = DOCTOR_INFO.phone.replace(/\D/g, '');
     if (docPhone.startsWith('0')) {
         docPhone = '254' + docPhone.substring(1);
@@ -528,11 +593,14 @@ function showSuccessMessage(bookingData) {
                 <button class="ticket-btn save-image-btn" onclick="downloadTicketImage('${bookingData.bookingId}')">
                     🖼️ Save as Image
                 </button>
+                <button class="ticket-btn calendar-btn" onclick="downloadICS()">
+                    📅 Save Calendar Invite (.ics)
+                </button>
+                <a href="${getGoogleCalendarUrl(bookingData)}" target="_blank" class="ticket-btn gcal-btn">
+                    📅 Add to Google Calendar
+                </a>
                 <a href="${whatsappLink}" target="_blank" class="ticket-btn whatsapp-contact-btn">
                     💬 Message Clinic on WhatsApp
-                </a>
-                <a href="${getGoogleCalendarUrl(bookingData)}" target="_blank" class="ticket-btn calendar-btn">
-                    📅 Add to Google Calendar
                 </a>
             </div>
             
@@ -940,6 +1008,7 @@ style.textContent = `
     .whatsapp-contact-btn {
         background: linear-gradient(135deg, #25d366, #1da851);
         color: white;
+        grid-column: 1 / -1;
     }
 
     .whatsapp-contact-btn:hover {
@@ -949,11 +1018,22 @@ style.textContent = `
     }
 
     .calendar-btn {
-        background: linear-gradient(135deg, #4285f4, #357ae8);
+        background: linear-gradient(135deg, #ff9f43, #ff6b6b);
         color: white;
     }
 
     .calendar-btn:hover {
+        background: linear-gradient(135deg, #ff8a12, #ff5252);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 159, 67, 0.4);
+    }
+
+    .gcal-btn {
+        background: linear-gradient(135deg, #4285f4, #357ae8);
+        color: white;
+    }
+
+    .gcal-btn:hover {
         background: linear-gradient(135deg, #357ae8, #2a62c7);
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
