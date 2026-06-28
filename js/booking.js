@@ -319,12 +319,83 @@ function generateBookingId() {
 /**
  * Shows success message with booking details as a professional ticket/modal
  */
+/**
+ * Helper to generate Google Calendar TEMPLATE URL for booking
+ */
+function getGoogleCalendarUrl(bookingData) {
+    const title = encodeURIComponent(`Paws & Hooves Vet Appointment: ${bookingData.petName}`);
+    
+    let timeStr = bookingData.appointmentTime; // e.g. "02:00"
+    let hour = parseInt(timeStr.split(':')[0]);
+    let minute = timeStr.split(':')[1] || '00';
+    
+    // Convert 12-hour AM/PM logic
+    if (hour >= 1 && hour <= 7) {
+        hour += 12; // E.g. "02:00" PM is 14:00
+    }
+    
+    const dateParts = bookingData.appointmentDate.split('-'); // [YYYY, MM, DD]
+    const year = dateParts[0];
+    const month = dateParts[1];
+    const day = dateParts[2];
+    
+    const pad = (n) => String(n).padStart(2, '0');
+    const startIso = `${year}${month}${day}T${pad(hour)}${minute}00`;
+    
+    // End date (add 45 mins)
+    let endHour = hour;
+    let endMin = parseInt(minute) + 45;
+    if (endMin >= 60) {
+        endHour += 1;
+        endMin -= 60;
+    }
+    const endIso = `${year}${month}${day}T${pad(endHour)}${pad(endMin)}00`;
+    
+    const details = encodeURIComponent(
+        `🐾 Paws & Hooves Veterinary Clinic Booking Confirmation\n\n` +
+        `• Booking ID: ${bookingData.bookingId}\n` +
+        `• Client Name: ${bookingData.ownerName}\n` +
+        `• Phone Number: ${bookingData.ownerPhone}\n` +
+        (bookingData.ownerEmail ? `• Email: ${bookingData.ownerEmail}\n` : '') +
+        `• Pet/Livestock: ${bookingData.petName} (${bookingData.petType})\n` +
+        `• Service Type: ${bookingData.appointmentType}\n` +
+        `• Date: ${formatDate(bookingData.appointmentDate)}\n` +
+        `• Time: ${bookingData.appointmentTime}\n` +
+        `• Notes: ${bookingData.appointmentNotes || 'None'}\n\n` +
+        `Need to reschedule? Please contact us on WhatsApp: https://wa.me/254759396531`
+    );
+    const location = encodeURIComponent('Paws & Hooves Veterinary Clinic, Nairobi, Kenya');
+    
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startIso}/${endIso}&details=${details}&location=${location}`;
+}
+
+/**
+ * Shows success message with booking details as a professional ticket/modal
+ */
 function showSuccessMessage(bookingData) {
     let docPhone = DOCTOR_INFO.phone.replace(/\D/g, '');
     if (docPhone.startsWith('0')) {
         docPhone = '254' + docPhone.substring(1);
     }
-    const whatsappLink = `https://wa.me/${docPhone}?text=Hi%20Paws%20%26%20Hooves%2C%20I%20have%20a%20booking%20confirmation%20with%20ID%20${bookingData.bookingId}`;
+    
+    // Construct rich text message for WhatsApp sharing
+    const whatsappLines = [
+        `*🐾 PAWS & HOOVES APPOINTMENT BOOKING*`,
+        `---------------------------------------`,
+        `*Booking ID:* ${bookingData.bookingId}`,
+        `*Client Name:* ${bookingData.ownerName}`,
+        `*Phone:* ${bookingData.ownerPhone}`,
+        bookingData.ownerEmail ? `*Email:* ${bookingData.ownerEmail}` : `*Email:* Not provided`,
+        `*Pet/Livestock:* ${bookingData.petName} (${bookingData.petType})`,
+        `*Service:* ${bookingData.appointmentType}`,
+        `*Date:* ${formatDate(bookingData.appointmentDate)}`,
+        `*Time:* ${bookingData.appointmentTime}`,
+        bookingData.appointmentNotes ? `*Notes:* ${bookingData.appointmentNotes}` : `*Notes:* None`,
+        `---------------------------------------`,
+        `Hi Paws & Hooves, I have successfully booked an appointment with the details above! Please confirm.`
+    ];
+    const whatsappText = encodeURIComponent(whatsappLines.join('\n'));
+    const whatsappLink = `https://wa.me/${docPhone}?text=${whatsappText}`;
     
     // Create modal overlay
     const overlay = document.createElement('div');
@@ -459,6 +530,9 @@ function showSuccessMessage(bookingData) {
                 </button>
                 <a href="${whatsappLink}" target="_blank" class="ticket-btn whatsapp-contact-btn">
                     💬 Message Clinic on WhatsApp
+                </a>
+                <a href="${getGoogleCalendarUrl(bookingData)}" target="_blank" class="ticket-btn calendar-btn">
+                    📅 Add to Google Calendar
                 </a>
             </div>
             
@@ -872,6 +946,17 @@ style.textContent = `
         background: linear-gradient(135deg, #20ba5d, #188b43);
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .calendar-btn {
+        background: linear-gradient(135deg, #4285f4, #357ae8);
+        color: white;
+    }
+
+    .calendar-btn:hover {
+        background: linear-gradient(135deg, #357ae8, #2a62c7);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
     }
 
     /* Footer */
