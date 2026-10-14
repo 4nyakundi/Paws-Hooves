@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paws & Hooves | Staff Login</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1f4037 0%, #99f2c8 100%);
+            padding: 20px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            padding: 40px 35px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+        }
+        .login-logo {
+            width: 90px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .login-title {
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .login-subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-size: 14px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #55a39a;
+            box-shadow: 0 0 0 3px rgba(85, 163, 154, 0.2);
+        }
+        .btn-login {
+            width: 100%;
+            background: #55a39a;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            background: #448981;
+        }
+        .btn-login:active {
+            transform: scale(0.99);
+        }
+        .error-msg {
+            display: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: 1px solid #fca5a5;
+            text-align: left;
+        }
+        .back-link {
+            margin-top: 25px;
+            display: block;
+            color: #55a39a;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <img src="../assets/images/mainlogo.png" alt="Paws & Hooves Logo" class="login-logo">
+        <h1 class="login-title">Staff Portal</h1>
+        <p class="login-subtitle">Paws & Hooves Mobile Vet Bookings Management</p>
+        
+        <div id="errorBox" class="error-msg"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="username">Staff Email</label>
+                <input type="email" id="username" name="username" placeholder="dr.vet@pawhooves.co.ke" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••••••" required autocomplete="current-password">
+            </div>
+            <button type="submit" id="loginBtn" class="btn-login">Sign In to Dashboard</button>
+        </form>
+
+        <a href="../index.html" class="back-link">← Return to Website</a>
+    </div>
+
+    <script>
+        // Check if already authenticated
+        fetch('../api/login.php?action=check')
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.user) {
+                    window.location.href = 'dashboard.html';
+                }
+            })
+            .catch(() => {});
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const errBox = document.getElementById('errorBox');
+            
+            errBox.style.display = 'none';
+            btn.disabled = true;
+            btn.textContent = 'Verifying...';
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('../api/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Set admin flag in localStorage for static backup
+                    localStorage.setItem('paw_staff_auth', JSON.stringify({
+                        user: username,
+                        logged_in: true,
+                        time: Date.now()
+                    }));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errBox.textContent = result.error || 'Invalid credentials. Please try again.';
+                    errBox.style.display = 'block';
+                    btn.disabled = false;
+                    btn.textContent = 'Sign In to Dashboard';
+                }
+            } catch (err) {
+                // If API is unreachable (e.g., running purely client-side without PHP server locally),
+                // verify against hardcoded user credentials so the user can test anywhere!
+                if (username.toLowerCase() === 'dr.vet@pawhooves.co.ke' && password === 'Dr.Vet 0759396531') {
+                    localStorage.setItem('paw_staff_auth', JSON.stringify({
+                        user: username,
+                        logged_in: true,
+                        time: Date.now()
+                    }));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errBox.textContent = 'Invalid credentials or unable to reach backend server.';
+                    errBox.style.display = 'block';
+                    btn.disabled = false;
+                    btn.textContent = 'Sign In to Dashboard';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

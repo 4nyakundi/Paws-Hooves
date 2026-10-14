@@ -1507,3 +1507,49 @@ body::before {
         grid-template-columns: 1fr;
     }
 }
+
+/* ============ FLOATING CALL & EMERGENCY BUTTON ============ */
+.floating-call-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #25D366;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+    z-index: 999;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: pulseCall 2.5s infinite;
+}
+
+.floating-call-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(37, 211, 102, 0.5);
+    color: white;
+}
+
+@keyframes pulseCall {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+    70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.staff-nav-link {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    padding: 6px 12px !important;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.staff-nav-link:hover {
+    background: rgba(255, 255, 255, 0.35);
+}

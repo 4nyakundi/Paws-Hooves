@@ -36,10 +36,11 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="clinic.html">Clinic</a></li>
+            <li><a href="clinic.html">Mobile Vet</a></li>
             <li><a href="index.html#about">About</a></li>
             <li><a href="index.html#testimonials">Reviews</a></li>
             <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="admin/login.html" class="staff-nav-link" title="Staff Portal">🔐 Staff</a></li>
             <li><a href="appointment.html" class="btn-primary">Book Now</a></li>
         </ul>
     </nav>
@@ -57,8 +58,16 @@
     <section id="main-content" class="appointment-section">
         <div class="appointment-container container">
             <div class="section-header">
-                
-                <p class="section-subtitle">Fill out the form below to schedule your consultation</p>
+                <div style="background: #e6f6f4; border: 2px solid #55a39a; border-radius: 12px; padding: 18px 24px; max-width: 680px; margin: 0 auto 25px; text-align: center;">
+                    <span style="background: #25D366; color: white; padding: 4px 12px; border-radius: 14px; font-weight: bold; font-size: 13px;">🚐 100% MOBILE VET SERVICE</span>
+                    <h3 style="color: #2d736a; margin: 10px 0 5px; font-size: 20px;">Need Immediate Care or Emergency? Please Call First!</h3>
+                    <p style="margin: 0 0 12px; color: #475569; font-size: 14px;">We operate entirely as a mobile service visiting your home or farm across Nairobi & Kiambu. For fastest dispatch, call Dr. Wangari directly:</p>
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <a href="tel:0759396531" class="btn-primary" style="background: #25D366; border: none; font-size: 16px; padding: 10px 22px; text-decoration: none;">📞 Call Now: 0759396531</a>
+                        <a href="https://wa.me/254759396531" target="_blank" class="btn-secondary" style="background: white; color: #2d736a; font-size: 15px; padding: 10px 20px; text-decoration: none;">💬 WhatsApp</a>
+                    </div>
+                </div>
+                <p class="section-subtitle">Or fill out the form below to reserve a future visit date</p>
             </div>
             
             <form id="appointmentForm" class="appointment-form" novalidate onsubmit="event.preventDefault();">
@@ -131,6 +140,11 @@
                             <option value="05:00">05:00 PM</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="ownerLocation">Your Location / Estate / Farm Area *</label>
+                    <input type="text" id="ownerLocation" name="ownerLocation" placeholder="e.g. Karen, Westlands, Kikuyu, Thika Road, Ruiru..." required>
                 </div>
 
                 <div class="form-group full-width">
@@ -207,8 +221,9 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="services.html">Services</a></li>
-                    <li><a href="clinic.html">Clinic</a></li>
+                    <li><a href="clinic.html">Mobile Vet</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="admin/login.html" style="color:var(--primary-teal); font-weight:600;">🔐 Staff Portal</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -234,6 +249,11 @@
             <p>Est. 2011 | Licensed Veterinary Clinic | Emergency Care Available</p>
         </div>
     </footer>
+
+    <!-- Floating Call / WhatsApp Button for Priority Mobile Contact -->
+    <a href="tel:0759396531" class="floating-call-btn" aria-label="Call Mobile Vet Dr. Wangari">
+        📞 Call Dr. Wangari
+    </a>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>

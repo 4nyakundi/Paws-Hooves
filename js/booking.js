@@ -108,6 +108,7 @@ function handleAppointmentSubmit(event) {
         ownerName: document.getElementById('ownerName').value.trim(),
         ownerPhone: document.getElementById('ownerPhone').value.trim(),
         ownerEmail: document.getElementById('ownerEmail').value.trim(),
+        ownerLocation: document.getElementById('ownerLocation') ? document.getElementById('ownerLocation').value.trim() : 'Nairobi & Kiambu',
         appointmentType: document.getElementById('appointmentType').value,
         petName: document.getElementById('petName').value.trim(),
         petType: document.getElementById('petType').value,
@@ -217,7 +218,25 @@ async function saveAppointment(appointment) {
     appointments.push(appointment);
     localStorage.setItem('appointments', JSON.stringify(appointments));
     
-    // 2. Save to Firebase Firestore
+    // 2. Save to cPanel MySQL Backend (forwards from dr.vet@pawhooves.co.ke to careywangaretracy@gmail.com and WhatsApp)
+    try {
+        fetch('api/book.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(appointment)
+        })
+        .then(r => r.json())
+        .then(res => {
+            console.log('✓ Saved to cPanel database & email forwarded:', res);
+        })
+        .catch(err => {
+            console.warn('Backend api/book.php notice (may be static testing):', err);
+        });
+    } catch(err) {
+        console.error(err);
+    }
+
+    // 3. Save to Firebase Firestore (backup)
     try {
         const docRef = await addDoc(collection(db, "appointments"), appointment);
         console.log("Document written to Firebase with ID: ", docRef.id);
@@ -226,10 +245,10 @@ async function saveAppointment(appointment) {
         // We still continue even if Firebase fails so the user gets their confirmation
     }
     
-    // 3. Send emails to both client and doctor
+    // 4. Send client confirmation email
     sendAppointmentEmails(appointment);
     
-    // 4. Send WhatsApp notification via backend server
+    // 5. Send WhatsApp notification via backend server
     fetch('https://paws-hooves.onrender.com/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

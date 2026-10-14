@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tour Paws & Hooves state-of-the-art veterinary clinic in Nairobi. View our modern facilities including surgery suite, diagnostic lab, and pharmacy.">
-    <meta name="keywords" content="veterinary clinic, surgery suite, diagnostic lab, pharmacy, modern facilities, Nairobi Kenya">
+    <meta name="description" content="Paws & Hooves 100% Mobile Veterinary Services in Nairobi & Kiambu. Door-to-door pet care and on-farm livestock visits with Dr. Wangari. Call 0759396531 for urgent dispatch.">
+    <meta name="keywords" content="mobile vet, mobile veterinarian Nairobi, farm visits Kenya, pet house calls, veterinary dispatch, emergency animal doctor">
     <meta name="theme-color" content="#55a39a">
     <link rel="canonical" href="https://pawhooves.co.ke/clinic">
-    <title>Paws & Hooves | Clinic & Gallery</title>
+    <title>Paws & Hooves | Mobile Vet & Door-to-Door Care</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
@@ -36,55 +36,87 @@
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="clinic.html">Clinic</a></li>
+            <li><a href="clinic.html">Mobile Vet</a></li>
             <li><a href="index.html#about">About</a></li>
             <li><a href="index.html#testimonials">Reviews</a></li>
             <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="admin/login.html" class="staff-nav-link" title="Staff Portal">🔐 Staff</a></li>
             <li><a href="appointment.html" class="btn-primary">Book Now</a></li>
         </ul>
     </nav>
 
-    <!-- Gallery Section -->
-    <section id="main-content" class="gallery-section container">
-        <div class="section-header">
-            <h2 class="section-title">Our Clinic & Gallery</h2>
-            <p class="section-subtitle">Visit our state-of-the-art facilities</p>
+    <!-- Mobile Vet Hero Banner & Call Priority -->
+    <section class="services-hero" style="background: linear-gradient(135deg, rgba(85,163,154,0.9), rgba(61,126,118,0.95)), url('assets/images/mainlogo.png') center/cover; padding: 60px 20px; text-align: center; color: white;">
+        <div class="container">
+            <span style="background: #f4a7b9; color: #6d4c3d; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 14px; display: inline-block; margin-bottom: 15px;">
+                🚐 100% Mobile Veterinary Care
+            </span>
+            <h1 class="hero-title" style="color: white; margin-bottom: 15px;">We Bring Expert Veterinary Care to Your Doorstep</h1>
+            <p style="font-size: 18px; max-width: 700px; margin: 0 auto 25px; line-height: 1.6; opacity: 0.95;">
+                Paws & Hooves operates exclusively as a <strong>Mobile Veterinary Service</strong> across Nairobi and Kiambu. No stressful clinic travel for your pets or farm animals — Dr. Wangari comes directly to your home or farm.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="tel:0759396531" class="btn-primary" style="background: #25D366; border: none; font-size: 18px; padding: 14px 28px; display: inline-flex; align-items: center; gap: 8px;">
+                    📞 Call / Emergency: 0759396531
+                </a>
+                <a href="https://wa.me/254759396531" target="_blank" class="btn-secondary" style="background: white; color: #2d736a; font-weight: 700; padding: 14px 28px;">
+                    💬 WhatsApp Dr. Wangari
+                </a>
+                <a href="appointment.html" class="btn-primary" style="padding: 14px 28px;">
+                    📅 Schedule Visit
+                </a>
+            </div>
         </div>
+    </section>
+
+    <!-- How Mobile Vet Works -->
+    <section id="main-content" class="gallery-section container" style="padding-top: 50px;">
+        <div class="section-header">
+            <h2 class="section-title">How Our Mobile Vet Service Works</h2>
+            <p class="section-subtitle">Prioritizing swift phone consultations and fast mobile dispatch</p>
+        </div>
+        
         <div class="gallery-grid" id="gallery-grid">
             <div class="gallery-item">
-                <div class="gallery-placeholder">
-                    <span>🏥</span>
-                    <p>Modern Clinic</p>
+                <div class="gallery-placeholder" style="background: #f0fdf4;">
+                    <span style="font-size: 40px;">📞</span>
+                    <h3 style="font-size: 18px; margin: 10px 0 5px; color: #166534;">1. Direct Phone Call</h3>
+                    <p style="font-size: 13px; color: #4b5563;">Call <strong>0759396531</strong> immediately to discuss symptoms and get direct veterinary triage.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <div class="gallery-placeholder">
-                    <span>🐕</span>
-                    <p>Pet Care</p>
+                <div class="gallery-placeholder" style="background: #fdf2f8;">
+                    <span style="font-size: 40px;">🚐</span>
+                    <h3 style="font-size: 18px; margin: 10px 0 5px; color: #9d174d;">2. Mobile Van Dispatched</h3>
+                    <p style="font-size: 13px; color: #4b5563;">Equipped with diagnostic kits, surgical supplies, and medications brought to your location.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <div class="gallery-placeholder">
-                    <span>🐾</span>
-                    <p>Surgery Suite</p>
+                <div class="gallery-placeholder" style="background: #eff6ff;">
+                    <span style="font-size: 40px;">🏠</span>
+                    <h3 style="font-size: 18px; margin: 10px 0 5px; color: #1e40af;">3. In-Home Pet Care</h3>
+                    <p style="font-size: 13px; color: #4b5563;">Stress-free checkups, vaccinations, wounds & wellness exams in your pet's own comfortable territory.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <div class="gallery-placeholder">
-                    <span>🩺</span>
-                    <p>Diagnostic Lab</p>
+                <div class="gallery-placeholder" style="background: #fefce8;">
+                    <span style="font-size: 40px;">🐄</span>
+                    <h3 style="font-size: 18px; margin: 10px 0 5px; color: #854d0e;">4. On-Farm Livestock Visits</h3>
+                    <p style="font-size: 13px; color: #4b5563;">Dedicated herd health, cattle, goats, sheep consultations, breeding, and emergency delivery.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <div class="gallery-placeholder">
-                    <span>💊</span>
-                    <p>Pharmacy</p>
+                <div class="gallery-placeholder" style="background: #f5f3ff;">
+                    <span style="font-size: 40px;">💊</span>
+                    <h3 style="font-size: 18px; margin: 10px 0 5px; color: #5b21b6;">5. Mobile Pharmacy</h3>
+                    <p style="font-size: 13px; color: #4b5563;">Instant prescription dispensing and treatment administered right on the spot without pharmacy delays.</p>
                 </div>
             </div>
             <div class="gallery-item">
-                <div class="gallery-placeholder">
-                    <span>🏡</span>
-                    <p>Farm Visits</p>
+                <div class="gallery-placeholder" style="background: #fee2e2;">
+                    <span style="font-size: 40px;">🚨</span>
+                    <h3 style="font-size: 18px; margin: 10px 0 5px; color: #991b1b;">6. 24/7 Urgent Dispatch</h3>
+                    <p style="font-size: 13px; color: #4b5563;">For emergencies, calling is prioritized over online forms for fastest response time.</p>
                 </div>
             </div>
         </div>
@@ -140,8 +172,9 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="services.html">Services</a></li>
-                    <li><a href="clinic.html">Clinic</a></li>
+                    <li><a href="clinic.html">Mobile Vet</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="admin/login.html" style="color:var(--primary-teal); font-weight:600;">🔐 Staff Portal</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -167,6 +200,11 @@
             <p>Est. 2011 | Licensed Veterinary Clinic | Emergency Care Available</p>
         </div>
     </footer>
+
+    <!-- Floating Call / WhatsApp Button for Priority Mobile Contact -->
+    <a href="tel:0759396531" class="floating-call-btn" aria-label="Call Mobile Vet Dr. Wangari">
+        📞 Call Dr. Wangari
+    </a>
 
     <script src="js/data-handler.js"></script>
     <script src="js/main.js"></script>
