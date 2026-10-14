@@ -197,10 +197,15 @@ $docHeaders = [
     'Content-type: text/html; charset=utf-8',
     'From: Paws & Hooves System <' . $fromEmail . '>',
     'Reply-To: ' . ($ownerEmail ?: $fromEmail),
+    'Return-Path: ' . $fromEmail,
     'X-Mailer: PHP/' . phpversion()
 ];
 
-$docMailSent = @mail($doctorEmail, $doctorSubject, $doctorEmailHtml, implode("\r\n", $docHeaders));
+$envelopeParam = "-f" . $fromEmail;
+$docMailSent = @mail($doctorEmail, $doctorSubject, $doctorEmailHtml, implode("\r\n", $docHeaders), $envelopeParam);
+if (!$docMailSent) {
+    $docMailSent = @mail($doctorEmail, $doctorSubject, $doctorEmailHtml, implode("\r\n", $docHeaders));
+}
 
 // -------------------------------------------------------------
 // 4. EMAIL 2: Stylized Immediate Booking Acknowledgment to CLIENT
@@ -278,10 +283,14 @@ if (!empty($ownerEmail)) {
         'Content-type: text/html; charset=utf-8',
         'From: Dr. Wangari - Paws & Hooves <' . $fromEmail . '>',
         'Reply-To: ' . $doctorEmail,
+        'Return-Path: ' . $fromEmail,
         'X-Mailer: PHP/' . phpversion()
     ];
 
-    $clientMailSent = @mail($ownerEmail, $clientSubject, $clientEmailHtml, implode("\r\n", $clientHeaders));
+    $clientMailSent = @mail($ownerEmail, $clientSubject, $clientEmailHtml, implode("\r\n", $clientHeaders), $envelopeParam);
+    if (!$clientMailSent) {
+        $clientMailSent = @mail($ownerEmail, $clientSubject, $clientEmailHtml, implode("\r\n", $clientHeaders));
+    }
 }
 
 // 5. WhatsApp Direct URL Construction for Dr. Wangari (+254759396531)
