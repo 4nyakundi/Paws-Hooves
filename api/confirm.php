@@ -3,6 +3,7 @@
 // Accessed directly from Dr. Wangari's email notification link
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/smtp_mailer.php';
 
 $action = strtolower(trim($_GET['action'] ?? 'confirm')); // confirm or cancel
 $bookingId = trim($_GET['id'] ?? '');
@@ -127,15 +128,7 @@ if (!empty($bookingId) && $token === $expectedToken) {
                     ";
                 }
                 
-                $headers = [
-                    'MIME-Version: 1.0',
-                    'Content-type: text/html; charset=utf-8',
-                    'From: Dr. Wangari - Paws & Hooves <' . $fromEmail . '>',
-                    'Reply-To: careywangaretracy@gmail.com',
-                    'X-Mailer: PHP/' . phpversion()
-                ];
-                
-                @mail($clientEmail, $subject, $body, implode("\r\n", $headers));
+                sendPawsEmail($clientEmail, $subject, $body, "Dr. Wangari - Paws & Hooves", 'careywangaretracy@gmail.com');
             }
         }
     } catch (\Exception $e) {

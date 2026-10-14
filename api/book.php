@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/smtp_mailer.php';
 
 $raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
@@ -192,20 +193,8 @@ $doctorEmailHtml = "
 </html>
 ";
 
-$docHeaders = [
-    'MIME-Version: 1.0',
-    'Content-type: text/html; charset=utf-8',
-    'From: Paws & Hooves System <' . $fromEmail . '>',
-    'Reply-To: ' . ($ownerEmail ?: $fromEmail),
-    'Return-Path: ' . $fromEmail,
-    'X-Mailer: PHP/' . phpversion()
-];
-
-$envelopeParam = "-f" . $fromEmail;
-$docMailSent = @mail($doctorEmail, $doctorSubject, $doctorEmailHtml, implode("\r\n", $docHeaders), $envelopeParam);
-if (!$docMailSent) {
-    $docMailSent = @mail($doctorEmail, $doctorSubject, $doctorEmailHtml, implode("\r\n", $docHeaders));
-}
+$docMailRes = sendPawsEmail($doctorEmail, $doctorSubject, $doctorEmailHtml, "Paws & Hooves Booking System", ($ownerEmail ?: $fromEmail));
+$docMailSent = $docMailRes['success'] ?? false;
 
 // -------------------------------------------------------------
 // 4. EMAIL 2: Stylized Immediate Booking Acknowledgment to CLIENT
@@ -278,19 +267,8 @@ if (!empty($ownerEmail)) {
     </html>
     ";
 
-    $clientHeaders = [
-        'MIME-Version: 1.0',
-        'Content-type: text/html; charset=utf-8',
-        'From: Dr. Wangari - Paws & Hooves <' . $fromEmail . '>',
-        'Reply-To: ' . $doctorEmail,
-        'Return-Path: ' . $fromEmail,
-        'X-Mailer: PHP/' . phpversion()
-    ];
-
-    $clientMailSent = @mail($ownerEmail, $clientSubject, $clientEmailHtml, implode("\r\n", $clientHeaders), $envelopeParam);
-    if (!$clientMailSent) {
-        $clientMailSent = @mail($ownerEmail, $clientSubject, $clientEmailHtml, implode("\r\n", $clientHeaders));
-    }
+    $clientMailRes = sendPawsEmail($ownerEmail, $clientSubject, $clientEmailHtml, "Dr. Wangari - Paws & Hooves", $doctorEmail);
+    $clientMailSent = $clientMailRes['success'] ?? false;
 }
 
 // 5. WhatsApp Direct URL Construction for Dr. Wangari (+254759396531)

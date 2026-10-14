@@ -1,45 +1,30 @@
 <?php
-// Diagnostics script to test mail sending and database connectivity on cPanel
+// Live Diagnostics: Test cPanel Authenticated SMTP Sending (Port 465 SSL)
 header('Content-Type: application/json');
 
-$results = [
-    'timestamp' => date('Y-m-d H:i:s'),
-    'php_version' => phpversion(),
-    'mail_function_enabled' => function_exists('mail'),
-    'server_name' => $_SERVER['SERVER_NAME'] ?? 'unknown',
-    'http_host' => $_SERVER['HTTP_HOST'] ?? 'unknown'
-];
+require_once __DIR__ . '/smtp_mailer.php';
 
-// Test DB
-require_once __DIR__ . '/db.php';
-try {
-    $pdo = getDBConnection();
-    $results['database_connection'] = 'SUCCESS';
-} catch (\Exception $e) {
-    $results['database_connection'] = 'FAILED: ' . $e->getMessage();
-}
-
-// Test Mail to Dr. Wangari
 $to = 'careywangaretracy@gmail.com';
-$from = 'dr.vet@pawhooves.co.ke';
-$subject = "Paws & Hooves Diagnostic Test - " . date('H:i:s');
-$message = "This is a direct diagnostic test from https://" . ($results['http_host'] ?? 'pawhooves.co.ke') . " to verify mail delivery to Dr. Wangari.";
+$subject = "🐾 Paws & Hooves SMTP Direct Test - " . date('Y-m-d H:i:s');
+$html = "
+<html>
+<body style='font-family: Arial, sans-serif; padding: 25px; background: #e6f6f4;'>
+  <div style='background: white; border-radius: 12px; padding: 25px; max-width: 550px; margin: 0 auto; border: 2px solid #55a39a;'>
+    <h2 style='color: #2d736a; margin-top: 0;'>🎉 Authenticated SMTP is Working!</h2>
+    <p>This email was transmitted through <strong>mail.pawhooves.co.ke:465 (SSL)</strong> using the official mailbox <code>dr.vet@pawhooves.co.ke</code>.</p>
+    <p>Because it is authenticated with SPF and DKIM through your server, it delivers straight to your Gmail inbox.</p>
+    <hr style='border: none; border-top: 1px solid #eee; margin: 20px 0;'>
+    <p style='font-size: 13px; color: #777;'>Paws & Hooves Mobile Vet System &bull; Nairobi & Kiambu</p>
+  </div>
+</body>
+</html>
+";
 
-$headers = [
-    'From: Paws & Hooves Test <' . $from . '>',
-    'Reply-To: ' . $from,
-    'X-Mailer: PHP/' . phpversion()
-];
+$result = sendPawsEmail($to, $subject, $html, "Dr. Wangari - Paws & Hooves", "dr.vet@pawhooves.co.ke");
 
-// Use -f envelope parameter for SPF/DKIM compliance
-$additional_params = "-f" . $from;
-
-$sent_with_param = @mail($to, $subject, $message, implode("\r\n", $headers), $additional_params);
-$results['mail_sent_with_envelope_from'] = $sent_with_param;
-
-if (!$sent_with_param) {
-    $sent_standard = @mail($to, $subject, $message, implode("\r\n", $headers));
-    $results['mail_sent_standard'] = $sent_standard;
-}
-
-echo json_encode($results, JSON_PRETTY_PRINT);
+echo json_encode([
+    'timestamp' => date('Y-m-d H:i:s'),
+    'recipient' => $to,
+    'smtp_server' => 'mail.pawhooves.co.ke:465 (SSL)',
+    'result' => $result
+], JSON_PRETTY_PRINT);
