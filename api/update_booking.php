@@ -61,6 +61,65 @@ try {
         ]);
     }
     
+    // If status is updated to confirmed or cancelled, notify client if email exists
+    if ($status === 'confirmed' || $status === 'cancelled') {
+        $getStmt = $pdo->prepare("SELECT * FROM `bookings` WHERE `booking_id` = :bid OR `id` = :id_num LIMIT 1");
+        $getStmt->execute([':bid' => $bookingId, ':id_num' => is_numeric($bookingId) ? (int)$bookingId : 0]);
+        $booking = $getStmt->fetch();
+        
+        if ($booking && !empty($booking['owner_email'])) {
+            $fromEmail = 'dr.vet@pawhooves.co.ke';
+            $clientEmail = $booking['owner_email'];
+            $ownerName = htmlspecialchars($booking['owner_name']);
+            $petName = htmlspecialchars($booking['pet_name']);
+            $date = htmlspecialchars($booking['appointment_date']);
+            $time = htmlspecialchars($booking['appointment_time']);
+            
+            if ($status === 'confirmed') {
+                $subject = "✅ Confirmed: Mobile Vet Visit for {$petName} with Dr. Wangari";
+                $body = "
+                <!DOCTYPE html>
+                <html>
+                <body style='font-family: Arial, sans-serif; background:#f4fbfb; padding:20px; color:#2d3748;'>
+                  <div style='max-width:550px; margin:0 auto; background:white; border-radius:12px; padding:25px; border:1px solid #d1eae6;'>
+                    <h2 style='color:#10b981; margin-top:0;'>Appointment Confirmed!</h2>
+                    <p>Dear <strong>{$ownerName}</strong>,</p>
+                    <p>Your mobile veterinary visit for <strong>{$petName}</strong> on <strong>{$date} at {$time}</strong> has been confirmed by Dr. Wangari.</p>
+                    <p style='background:#f0fdf4; padding:12px; border-left:4px solid #10b981;'>
+                      🚐 Dr. Wangari will travel directly to your location. For any urgent questions, reach us at <a href='tel:0759396531'>0759396531</a>.
+                    </p>
+                    <p>Best regards,<br><strong>Dr. Wangari &bull; Paws & Hooves Mobile Vet</strong></p>
+                  </div>
+                </body>
+                </html>";
+            } else {
+                $subject = "Update on your Paws & Hooves Appointment Request ({$bookingId})";
+                $body = "
+                <!DOCTYPE html>
+                <html>
+                <body style='font-family: Arial, sans-serif; padding:20px; color:#333;'>
+                  <div style='max-width:550px; margin:0 auto; background:white; padding:25px; border:1px solid #eee; border-radius:10px;'>
+                    <h2 style='color:#c53030; margin-top:0;'>Appointment Notice</h2>
+                    <p>Dear {$ownerName},</p>
+                    <p>Your requested appointment on <strong>{$date} at {$time}</strong> could not be accommodated.</p>
+                    <p>Please call or WhatsApp us directly at <a href='tel:0759396531'>0759396531</a> to reschedule.</p>
+                    <p>Best regards,<br><strong>Dr. Wangari &bull; Paws & Hooves</strong></p>
+                  </div>
+                </body>
+                </html>";
+            }
+            
+            $headers = [
+                'MIME-Version: 1.0',
+                'Content-type: text/html; charset=utf-8',
+                'From: Dr. Wangari - Paws & Hooves <' . $fromEmail . '>',
+                'Reply-To: careywangaretracy@gmail.com',
+                'X-Mailer: PHP/' . phpversion()
+            ];
+            @mail($clientEmail, $subject, $body, implode("\r\n", $headers));
+        }
+    }
+    
     echo json_encode([
         'success' => true,
         'message' => 'Status updated to ' . $status
